@@ -1,7 +1,7 @@
 <?php
 class User extends Model
 {
-	protected static $table_name = "account";
+	protected static $table_name = '"user"';
 
 	public static function get_current_user() {
 		if ($_SESSION && array_key_exists('email', $_SESSION) && array_key_exists('password', $_SESSION)) {
@@ -15,15 +15,9 @@ class User extends Model
 		return '<a href="user?id='.$user["id"].'" class="link">'.$user["first_name"]." ".$user["last_name"].'</a>';
 	}
 
-	public static function type_to_ukr ($type) {
-		switch ($type) {
-			case 'account':
-				return 'Користувач';
-			case 'moderator':
-				return 'Модератор';
-			case 'admin':
-				return 'Адміністратор';
-		}
+	public static function to_html ($user) {
+		return 
+			$user["last_name"]." ".$user["first_name"];
 	}
 }
 ?>

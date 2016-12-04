@@ -1,5 +1,4 @@
-/* Sticky footer styles
--------------------------------------------------- */
+
 html {
   position: relative;
   min-height: 100%;
@@ -18,11 +17,6 @@ body {
   height: 60px;
   background-color: #f5f5f5;
 }
-
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
 
 .container {
   width: auto;
@@ -52,4 +46,8 @@ tbody tr:hover{
 td{
   max-width:10em; 
   overflow:hidden;
+}
+
+#data_ops{
+  margin-bottom: 2rem;
 }

@@ -12,34 +12,36 @@
 	<script>
 		$(document).ready(function(){
 			
-			$("button[data-target='#removeRec'],[data-target='#editRec']").click(function(){
+			$("button[data-target='#removeRec'],button[name='editRec']").click(function(){
 				$("tr").removeClass("info");
 				$(this).parents("tr").addClass("info");
-				var col_names = $(this).parents("tr").children("td").map(function() {
-				// alert($(this).attr("name"));
-				$("[name='description']").attr("desc");
+				});
+
+			$("button[name='editRec']").click(function(){
+				$("#editRec form").attr('action','product/edit');
+				var col_names = $(this).parents("tr").children("td").each(function() {
 				$("input[name='"+$(this).attr("name")+"']").prop( 'value', $(this).html());	
 				$("textarea[name='"+$(this).attr("name")+"']").html($(this).html());
 				$("option").removeProp("selected");	
 				$("option[value='"+$(this).html()+"']").prop('selected',true);
-				return $(this).attr("name")+"vlue ="+$(this).html();
+				$("#editRec h4.modal-title").html("Edit Product");
 			});
-
-				var productId = $(this).attr("name");
-				$("[name='id']").attr( 'value', productId);
+				
 				});
+
 				$("[data-dismiss='modal']").click(function(){
 					$("tr").removeClass("info");
 				});
 
-			});
+				$("button[name='createRec']").click(function(){
+					$("#editRec form").attr('action','product/create');
+					$("#editRec button[type='Reset']").click();
+					$("#editRec textarea[name='description']").html("");
+					$("#editRec h4.modal-title").html("Create Product");
+				});
+
+				});
 			</script>
-	<!-- <style type="text/css">
-		td{
-		  max-width:3em; 
-		  overflow:hidden;
-		}
-	</style> -->
 </head>
 <body>
 	<header>
@@ -105,8 +107,8 @@
 						<form id="productRemoveForm" action="product/remove" method="post" class="form-horizontal">
 							<input type="text" value="" class="" name="id" hidden>
 						</form>
-						<input type="submit" form="productRemoveForm" class="btn btn-default"/>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<input type="submit" value="Confirm" form="productRemoveForm" class="btn btn-danger"/>
+						<input type="reset" value="Cancel" form="productRemoveForm" class="btn btn-default" data-dismiss="modal"/>
 					</div>
 				</div>
 
@@ -122,11 +124,11 @@
 					</div>
 					<div class="modal-body">
 						<form name="productEdit" action="product/edit" method="post" class="form-horizontal">
-							<input type="text" value="" class="" name="id">
+							<input type="text" value="" class="hidden" name="id">
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="productName">Name:</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="name">
+									<input required type="text" class="form-control" name="name">
 								</div>
 							</div>
 							<div class="form-group">
@@ -150,11 +152,10 @@
 							<div class="form-group">
 								<label  class="control-label col-sm-2" for="productLoc">Location:</label>
 								<div class="col-sm-10">
-									<select class="form-control" id="productLoc">
-										<option>1</option>
-										<option>2</option>
-										<option value="3" id="op3">3</option>
-										<option>4</option>
+									<select class="form-control" name="location" id="productLoc">
+										<?php foreach ($params["locations"] as $key => $value) {
+											echo "<option value=".$value["name"].">".$value["name"]."</option>";
+										} ?>
 									</select>
 								</div>
 							</div>
@@ -162,28 +163,28 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="productAmount">Amount:</label>
 								<div class="col-sm-10">
-									<input type="number" name="amount" id="productAmount" value="90" class="form-control">
+									<input required type="number" name="amount" id="productAmount" value="1" min="1" class="form-control">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="productPrice">Price:</label>
 								<div class="col-sm-10">
-									<input type="number" class="form-control" name="price" id="productPrice">
+									<input required type="number" class="form-control" name="price" value="0" min="0" step=any id="productPrice">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="productCode">Code:</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="inventarisation_code" id="productCode">
+									<input required type="text" class="form-control" name="inventarisation_code" id="productCode">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<button type="Submit" class="btn btn-warning">Submit</button>
-									<button type="Reset" class="btn btn-warning">Reset</button>
+									<button type="Submit" class="btn btn-primary">Submit</button>
+									<button type="Reset" class="btn">Reset</button>
 								</div>
 							</div>
 						</form>
