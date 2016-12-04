@@ -1,10 +1,4 @@
 <?php
-function returnFunction($a)
- {
- 	$c = $a*$a;
-return $c;
- }
-$a =5;
-$b = returnFunction($a);
-echo $b;
+ini_set('display_errors', 1);
+require_once 'application/bootstrap.php';
 ?>
